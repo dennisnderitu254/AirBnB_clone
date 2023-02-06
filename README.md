@@ -281,5 +281,5 @@ $ python3 unittest -m tests/test_console.py
 
 ## Authors :black_nib:
 
-**Lucy Njeri Maina** <[NjeriMaina4172](https://github.com/NjeriMaina4172)>
-**Dennis Nderitu Kinyanjui** <[dennisnderitu254](https://github.com/dennisnderitu254)>
+- **Lucy Njeri Maina** <[NjeriMaina4172](https://github.com/NjeriMaina4172)>
+- **Dennis Nderitu Kinyanjui** <[dennisnderitu254](https://github.com/dennisnderitu254)>

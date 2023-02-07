@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+# It imports the BaseModel class from the base_model module.
 from models.base_model import BaseModel
 
 my_model = BaseModel()

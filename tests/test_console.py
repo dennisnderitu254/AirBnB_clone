@@ -23,9 +23,21 @@ from unittest.mock import patch
 class TestHBNBCommand_prompting(unittest.TestCase):
     """Unittests for testing prompting of the HBNB command interpreter."""
 
+    # 1. We import the unittest module.
+    # 2. We import the HBNBCommand class from the console.py file.
+    # 3. We create a class called TestHBNBCommand that inherits from unittest.TestCase.
+    # 4. We create a method called test_prompt_class that checks if the prompt is of type str.
+    # 5. We create a method called test_prompt_string that checks if the prompt is equal to "(hbnb) ".
+    # 6. We run the tests.
     def test_prompt_string(self):
         self.assertEqual("(hbnb) ", HBNBCommand.prompt)
 
+    # 1. We’re creating a new class called TestEmptyLine.
+    # 2. We’re creating a new method called test_empty_line.
+    # 3. We’re using the unittest module to create a new test case.
+    # 4. We’re using the patch function to mock the stdout object.
+    # 5. We’re using the assertFalse function to check that the return value of the onecmd method is False.
+    # 6. We’re using the assertEqual function to check that the output of the onecmd method is an empty string.
     def test_empty_line(self):
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd(""))

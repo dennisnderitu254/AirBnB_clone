@@ -1,7 +1,7 @@
 #!/usr/bin/python3
-"""This module creates a Review class"""
-"""Defines the Review class."""
+"""This module creates a Review class, Defines the Review class."""
 from models.base_model import BaseModel
+
 
 class Review(BaseModel):
 

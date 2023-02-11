@@ -73,10 +73,15 @@ class HBNBCommand(cmd.Cmd):
         print("*** Unknown syntax: {}".format(arg))
         return False
 
+>>>>>>> e9ab801397a1f6c10bf3864b06fe55d784cef678
     def do_quit(self, arg):
         """Quit command to exit the program."""
         return True
 
+<<<<<<< HEAD
+
+if __name__ == '__main__':
+=======
     def do_EOF(self, arg):
         """EOF signal to exit the program."""
         print("")
@@ -206,4 +211,5 @@ class HBNBCommand(cmd.Cmd):
 
 
 if __name__ == "__main__":
+>>>>>>> e9ab801397a1f6c10bf3864b06fe55d784cef678
     HBNBCommand().cmdloop()

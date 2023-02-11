@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""Unittest module for the User Class."""
 """Defines unittests for models/user.py.
 Unittest classes:
     TestUser_instantiation
@@ -188,6 +189,7 @@ class TestUser_to_dict(unittest.TestCase):
         us = User()
         with self.assertRaises(TypeError):
             us.to_dict(None)
+
 
 
 if __name__ == "__main__":

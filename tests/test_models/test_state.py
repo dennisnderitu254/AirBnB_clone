@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""Unittest module for the State Class."""
 """Defines unittests for models/state.py.
 Unittest classes:
     TestState_instantiation

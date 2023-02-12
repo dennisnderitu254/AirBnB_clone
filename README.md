@@ -1041,6 +1041,31 @@ guillaume@ubuntu:~/AirBnB$ ./console.py
 * GitHub repository: `AirBnB_clone`
 * File: `console.py`
 
+### 14. Destroy
+
+Update your command interpreter (`console.py`) to destroy an instance based on his ID: `<class name>.destroy(<id>`).
+
+Errors management must be the same as previously.
+
+```
+guillaume@ubuntu:~/AirBnB$ ./console.py
+(hbnb) User.count()
+2
+(hbnb) User.destroy("246c227a-d5c1-403d-9bc7-6a47bb9f0f68")
+(hbnb) User.count()
+1
+(hbnb) User.destroy("Bar")
+** no instance found **
+(hbnb)
+```
+
+**No unittests needed**
+
+**Repo:**
+
+* GitHub repository: `AirBnB_clone`
+* File: `console.py`
+
 ### Authors :black_nib
 
 * **Lucy Njeri Maina** <[NjeriMaina4172](https://github.com/NjeriMaina4172)>

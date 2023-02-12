@@ -1117,6 +1117,24 @@ guillaume@ubuntu:~/AirBnB$ ./console.py
 * GitHub repository: `AirBnB_clone`
 * File: `console.py`
 
+### 17. Unittests for the Console
+
+Write all unittests for `console.py`, all features!
+
+For testing the console, you should “intercept” STDOUT of it, we **highly recommend** you to use:
+
+```
+with patch('sys.stdout', new=StringIO()) as f:
+    HBNBCommand().onecmd("help show")
+```
+
+Otherwise, you will have to re-write the console by replacing `precmd` by `default`.
+
+**Repo:**
+
+* GitHub repository: `AirBnB_clone`
+* File: `console.py`
+
 ### Authors :black_nib
 
 * **Lucy Njeri Maina** <[NjeriMaina4172](https://github.com/NjeriMaina4172)>

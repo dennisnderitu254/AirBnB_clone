@@ -707,6 +707,56 @@ guillaume@ubuntu:~/AirBnB$
 * GitHub repository: `AirBnB_clone`
 * File: `models/engine/file_storage.py, models/engine/__init__.py, models/__init__.py, models/base_model.py, tests/`
 
+### 6. Console 0.0.1
+
+Write a program called `console.py` that contains the entry point of the command interpreter:
+
+* You must use the module `cmd`
+* Your class definition must be: `class HBNBCommand(cmd.Cmd)`:
+* Your command interpreter should implement:
+      - `quit` and `EOF` to exit the program
+      - `help` (this action is provided by default by `cmd` but you should keep it updated  and documented as you work through tasks)
+      - a custom prompt: `(hbnb)`
+      - an empty line + `ENTER` shouldn’t execute anything
+* Your code should not be executed when imported
+
+Warning:
+
+You should end your file with:
+
+```
+if __name__ == '__main__':
+    HBNBCommand().cmdloop()
+```
+
+to make your program executable except when imported. Please don’t add anything around - the Checker won’t like it otherwise
+
+```
+guillaume@ubuntu:~/AirBnB$ ./console.py
+(hbnb) help
+
+Documented commands (type help <topic>):
+========================================
+EOF  help  quit
+
+(hbnb)
+(hbnb) help quit
+Quit command to exit the program
+
+(hbnb)
+(hbnb)
+(hbnb) quit
+guillaume@ubuntu:~/AirBnB$
+
+```
+
+**NO UNITTESTS NEEDED**
+
+**Repo:**
+
+* GitHub repository: `AirBnB_clone`
+* File: `console.py`
+
 ### Authors :black_nib
 
 * **Lucy Njeri Maina** <[NjeriMaina4172](https://github.com/NjeriMaina4172)>

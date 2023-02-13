@@ -1227,3 +1227,54 @@ class Review(BaseModel):
     user_id = ""
     text = ""
 ```
+
+### 10. Console 1.0
+
+Update `FileStorage` to manage correctly serialization and deserialization of all our new classes: `Place`, `State`, `City`, `Amenity` and `Review`
+
+Update your command interpreter (`console.py`) to allow those actions: `show`, `create`, `destroy`, `update` and `all` with all classes created previously.
+
+Enjoy your first console!
+
+**No unittests needed for the console**
+
+**Repo:**
+
+* GitHub repository: `AirBnB_clone`
+* File: `console.py`
+
+#### Solution
+
+`console.py`
+
+```
+class HBNBCommand(cmd.Cmd):
+    """Defines the HolbertonBnB command interpreter.
+    Attributes:
+        prompt (str): The command prompt.
+    """
+
+    prompt = "(hbnb) "
+    __classes = {
+        "BaseModel",
+        "User",
+        "State",
+        "City",
+        "Place",
+        "Amenity",
+        "Review"
+    }
+```
+
+`models/engine/file_storage.py`
+
+```
+#!/usr/bin/python3
+from models.base_model import BaseModel
+from models.user import User
+from models.state import State
+from models.city import City
+from models.place import Place
+from models.amenity import Amenity
+from models.review import Review
+```

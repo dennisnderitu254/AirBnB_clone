@@ -327,3 +327,167 @@ guillaume@ubuntu:~/AirBnB$
 
 * GitHub repository: `AirBnB_clone`
 * File: `models/base_model.py, models/__init__.py, tests/`
+
+#### Solution
+
+```
+class BaseModel:
+    """Represents the BaseModel of the HBnB project."""
+
+  def __init__(self):
+        """Initialize a new BaseModel.
+        Args:
+            *args (any): Unused.
+            **kwargs (dict): Key/value pairs of attributes.
+        """
+        tform = "%Y-%m-%dT%H:%M:%S.%f"
+        self.id = str(uuid4())
+        self.created_at = datetime.today()
+        self.updated_at = datetime.today()
+
+    def save(self):
+        """Update updated_at with the current datetime."""
+        self.updated_at = datetime.today()
+        models.storage.save()
+
+    def to_dict(self):
+        """Return the dictionary of the BaseModel instance.
+        Includes the key/value pair __class__ representing
+        the class name of the object.
+        """
+        rdict = self.__dict__.copy()
+        rdict["created_at"] = self.created_at.isoformat()
+        rdict["updated_at"] = self.updated_at.isoformat()
+        rdict["__class__"] = self.__class__.__name__
+        return rdict
+
+    def __str__(self):
+        """Return the print/str representation of the BaseModel instance."""
+        clname = self.__class__.__name__
+        return "[{}] ({}) {}".format(clname, self.id, self.__dict__)
+```
+
+### 4. Create BaseModel from dictionary
+
+Previously we created a method to generate a dictionary representation of an instance (method `to_dict()`).
+
+Now it’s time to re-create an instance with this dictionary representation.
+
+```
+<class 'BaseModel'> -> to_dict() -> <class 'dict'> -> <class 'BaseModel'>
+
+```
+
+Update `models/base_model.py`:
+
+* `__init__(self, *args, **kwargs)`:
+  * you will use `*args,**kwargs` arguments for the constructor of a BaseModel. (more information inside the AirBnB clone concept page)
+  * `*args` won’t be used
+  * if `kwargs` is not empty:
+    * each key of this dictionary is an attribute name (Note `__class__` from kwargs is the only one that should not be added as an attribute. See the example output, below)
+    * each value of this dictionary is the value of this attribute name
+    * Warning: `created_at` and `updated_at` are strings in this dictionary, but inside your `BaseModel` instance is working with `datetime` object. You have to convert these strings into `datetime` object. Tip: you know the string format of these datetime
+  * otherwise:
+    * create `id` and `created_at` as you did previously (new instance)
+
+```
+guillaume@ubuntu:~/AirBnB$ cat test_base_model_dict.py
+#!/usr/bin/python3
+from models.base_model import BaseModel
+
+my_model = BaseModel()
+my_model.name = "My_First_Model"
+my_model.my_number = 89
+print(my_model.id)
+print(my_model)
+print(type(my_model.created_at))
+print("--")
+my_model_json = my_model.to_dict()
+print(my_model_json)
+print("JSON of my_model:")
+for key in my_model_json.keys():
+    print("\t{}: ({}) - {}".format(key, type(my_model_json[key]), my_model_json[key]))
+
+print("--")
+my_new_model = BaseModel(**my_model_json)
+print(my_new_model.id)
+print(my_new_model)
+print(type(my_new_model.created_at))
+
+print("--")
+print(my_model is my_new_model)
+
+guillaume@ubuntu:~/AirBnB$ ./test_base_model_dict.py
+56d43177-cc5f-4d6c-a0c1-e167f8c27337
+[BaseModel] (56d43177-cc5f-4d6c-a0c1-e167f8c27337) {'id': '56d43177-cc5f-4d6c-a0c1-e167f8c27337', 'created_at': datetime.datetime(2017, 9, 28, 21, 3, 54, 52298), 'my_number': 89, 'updated_at': datetime.datetime(2017, 9, 28, 21, 3, 54, 52302), 'name': 'My_First_Model'}
+<class 'datetime.datetime'>
+--
+{'id': '56d43177-cc5f-4d6c-a0c1-e167f8c27337', 'created_at': '2017-09-28T21:03:54.052298', '__class__': 'BaseModel', 'my_number': 89, 'updated_at': '2017-09-28T21:03:54.052302', 'name': 'My_First_Model'}
+JSON of my_model:
+    id: (<class 'str'>) - 56d43177-cc5f-4d6c-a0c1-e167f8c27337
+    created_at: (<class 'str'>) - 2017-09-28T21:03:54.052298
+    __class__: (<class 'str'>) - BaseModel
+    my_number: (<class 'int'>) - 89
+    updated_at: (<class 'str'>) - 2017-09-28T21:03:54.052302
+    name: (<class 'str'>) - My_First_Model
+--
+56d43177-cc5f-4d6c-a0c1-e167f8c27337
+[BaseModel] (56d43177-cc5f-4d6c-a0c1-e167f8c27337) {'id': '56d43177-cc5f-4d6c-a0c1-e167f8c27337', 'created_at': datetime.datetime(2017, 9, 28, 21, 3, 54, 52298), 'my_number': 89, 'updated_at': datetime.datetime(2017, 9, 28, 21, 3, 54, 52302), 'name': 'My_First_Model'}
+<class 'datetime.datetime'>
+--
+False
+guillaume@ubuntu:~/AirBnB$
+```
+
+**Repo:**
+
+* GitHub repository: `AirBnB_clone`
+* File: `models/base_model.py, tests/`
+
+#### Solution
+
+```
+class BaseModel:
+    """Represents the BaseModel of the HBnB project."""
+
+  def __init__(self, *args, **kwargs):
+          """Initialize a new BaseModel.
+          Args:
+              *args (any): Unused.
+              **kwargs (dict): Key/value pairs of attributes.
+          """
+          tform = "%Y-%m-%dT%H:%M:%S.%f"
+          self.id = str(uuid4())
+          self.created_at = datetime.today()
+          self.updated_at = datetime.today()
+          if len(kwargs) != 0:
+              for k, v in kwargs.items():
+                  if k == "created_at" or k == "updated_at":
+                      self.__dict__[k] = datetime.strptime(v, tform)
+                  else:
+                      self.__dict__[k] = v
+          else:
+              models.storage.new(self)
+
+      def save(self):
+          """Update updated_at with the current datetime."""
+          self.updated_at = datetime.today()
+          models.storage.save()
+
+      def to_dict(self):
+          """Return the dictionary of the BaseModel instance.
+          Includes the key/value pair __class__ representing
+          the class name of the object.
+          """
+          rdict = self.__dict__.copy()
+          rdict["created_at"] = self.created_at.isoformat()
+          rdict["updated_at"] = self.updated_at.isoformat()
+          rdict["__class__"] = self.__class__.__name__
+          return rdict
+
+      def __str__(self):
+          """Return the print/str representation of the BaseModel instance."""
+          clname = self.__class__.__name__
+          return "[{}] ({}) {}".format(clname, self.id, self.__dict__)
+
+```

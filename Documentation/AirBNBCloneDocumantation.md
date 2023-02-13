@@ -1065,3 +1065,165 @@ class HBNBCommand(cmd.Cmd):
         "User"
     }
 ```
+
+### 9. More classes
+
+Write all those classes that inherit from `BaseModel`:
+
+* `State` (`models/state.py`):
+  * Public class attributes:
+    * `name`: string - empty string
+
+* `City` (`models/city.py`):
+
+  * Public class attributes:
+    * `state_id`: string - empty string: it will be the `State.id`
+    * `name`: string - empty string
+
+* `Amenity` (`models/amenity.py`):
+  * Public class attributes:
+    * `name`: string - empty string
+
+* Place (models/place.py):
+  * Public class attributes:
+    * `city_id`: string - empty string: it will be the `City.id`
+    * `user_id`: string - empty string: it will be the `User.id`
+    * `name`: string - empty string
+    * `description`: string - empty string
+    * `number_rooms`: integer - 0
+    * `number_bathrooms`: integer - 0
+    * `max_guest`: integer - 0
+    * `price_by_night`: integer - 0
+    * `latitude`: float - 0.0
+    * `longitude`: float - 0.0
+    * `amenity_ids`: list of string - empty list: it will be the list of Amenity.id later
+
+* `Review` (`models/review.py`):
+  * Public class attributes:
+    * `place_id`: string - empty string: it will be the Place.id
+    * `user_id`: string - empty string: it will be the User.id
+    * `text`: string - empty string
+
+**Repo:**
+
+* GitHub repository: `AirBnB_clone`
+* File: `console.py`
+
+#### Solution
+
+`models/state.py`
+
+```
+#!/usr/bin/python3
+"""This module creates a User class, Defines the State class."""
+from models.base_model import BaseModel
+
+
+class State(BaseModel):
+
+    """Class for managing state objects
+    Represent a state.
+    Attributes:
+        name (str): The name of the state.
+    """
+
+    name = ""
+```
+
+`models/city.py`
+
+```
+#!/usr/bin/python3
+"""This module creates a City class"""
+from models.base_model import BaseModel
+
+
+class City(BaseModel):
+    """Class for managing city objects
+    Represent a city.
+    Attributes:
+        state_id (str): the state id.
+        name (str): The name of the city.
+    """
+    state_id = ""
+    name = ""
+```
+
+`models/amenity.py`
+
+```
+#!/usr/bin/python3
+"""This module creates the Amenity class"""
+from models.base_model import BaseModel
+
+
+class Amenity(BaseModel):
+    """Class for managing amenity objects
+    Represent an amenity.
+    Attributes:
+    name (str): The name of the amenity.
+    """
+    name = ""
+```
+
+`models/place.py`
+
+```
+#!/usr/bin/python3
+"""This module creates a Place class,Defines the Place class"""
+from models.base_model import BaseModel
+
+
+class Place(BaseModel):
+
+    """Class for managing place objects
+    Represent a place.
+    Attributes:
+        city_id (str): The City id.
+        user_id (str): theUser id.
+        name (str): The name of the place.
+        description (str): the description of the place.
+        number_rooms (int): the number of rooms of the place.
+        number_bathrooms (int): The number of bathrooms of the place.
+        max_guest (int): The maximum number of guests of the place.
+        price_by_night (int): The price by nght of the place.
+        latitude (float): The latitude of the place.
+        longitude (float): The longitude of the place.
+        amenity_ids (list): A list of Amenity ids.
+    """
+
+    city_id = ""
+    user_id = ""
+    name = ""
+    description = ""
+    number_rooms = 0
+    number_bathrooms = 0
+    max_guest = 0
+    price_by_night = 0
+    latitude = 0.0
+    longitude = 0.0
+    amenity_ids = []
+```
+
+`models/review.py`
+
+```
+#!/usr/bin/python3
+"""This module creates a Review class, Defines the Review class."""
+from models.base_model import BaseModel
+
+
+class Review(BaseModel):
+
+    """Class for managing review objects
+    Represent a review.
+    Attributes:
+        place_id (str): The Place id.
+        user_id (str): the User id.
+        text (str): The text of the review.
+    """
+
+    place_id = ""
+    user_id = ""
+    text = ""
+```

@@ -664,3 +664,267 @@ storage.reload()
 ```
 
 ```
+
+### 6. Console 0.0.1
+
+Write a program called `console.py` that contains the entry point of the command interpreter:
+
+* You must use the module `cmd`
+* Your class definition must be: `class HBNBCommand(cmd.Cmd)`:
+* Your command interpreter should implement:
+      - `quit` and `EOF` to exit the program
+      - `help` (this action is provided by default by `cmd` but you should keep it updated  and documented as you work through tasks)
+      - a custom prompt: `(hbnb)`
+      - an empty line + `ENTER` shouldn’t execute anything
+* Your code should not be executed when imported
+
+Warning:
+
+You should end your file with:
+
+```
+if __name__ == '__main__':
+    HBNBCommand().cmdloop()
+```
+
+to make your program executable except when imported. Please don’t add anything around - the Checker won’t like it otherwise
+
+```
+guillaume@ubuntu:~/AirBnB$ ./console.py
+(hbnb) help
+
+Documented commands (type help <topic>):
+========================================
+EOF  help  quit
+
+(hbnb)
+(hbnb) help quit
+Quit command to exit the program
+
+(hbnb)
+(hbnb)
+(hbnb) quit
+guillaume@ubuntu:~/AirBnB$
+
+```
+
+**NO UNITTESTS NEEDED**
+
+**Repo:**
+
+* GitHub repository: `AirBnB_clone`
+* File: `console.py`
+
+#### Solution
+
+`console.py File`
+
+```
+class HBNBCommand(cmd.Cmd):
+    """Defines the HolbertonBnB command interpreter.
+    Attributes:
+        prompt (str): The command prompt.
+    """
+
+    prompt = "(hbnb) "
+    __classes = {
+        "BaseModel",
+    }
+
+    def emptyline(self):
+        """Do nothing upon receiving an empty line."""
+        pass
+
+    def do_quit(self, arg):
+        """Quit command to exit the program."""
+        return True
+
+    def do_EOF(self, arg):
+        """EOF signal to exit the program."""
+        print("")
+        return True
+
+if __name__ == '__main__':
+    HBNBCommand().cmdloop()
+```
+
+### 7. Console 0.1
+
+Update your command interpreter (`console.py`) to have these commands:
+
+* `create`: Creates a new instance of `BaseModel`, saves it (to the JSON file) and prints the `id`. Ex: `$ create BaseModel`
+  * If the class name is missing, print `**class name missing**` (ex: `$ create`)
+  * If the class name doesn’t exist, print `**class doesn't exist**` (ex: `$ create MyModel`)
+
+* `show`: Prints the string representation of an instance based on the class name and `id`. Ex: `$ show BaseModel 1234-1234-1234`.
+  * If the class name is missing, print `**class name missing**` (ex: `$ show`)
+  * If the class name doesn’t exist, print `**class doesn't exist**` (ex: `$ show MyModel`)
+  * If the id is missing, print `**instance id missing**` (ex: `$ show BaseModel`)
+  * If the instance of the class name doesn’t exist for the id, print `**no instance found**` (ex: `$ show BaseModel 121212`)
+
+* `destroy`: Deletes an instance based on the class name and `id` (save the change into the JSON file). Ex: `$ destroy BaseModel 1234-1234-1234`.
+      - If the class name is missing, print `**class name missing**` (ex: `$ destroy`)
+      - If the class name doesn’t exist, print `**class doesn't exist**` (ex:$ destroy - MyModel)
+      - If the `id` is missing, print `**instance id missing**` (ex: `$ destroy BaseModel`)
+      - If the instance of the class name doesn’t exist for the `id`, print `**no instance found**` (ex: `$ destroy BaseModel 121212`)
+
+* `all`: Prints all string representation of all instances based or not on the class name. Ex: `$ all BaseModel` or `$ all`.
+      - The printed result must be a list of strings (like the example below)
+      - If the class name doesn’t exist, print `**class doesn't exist**` (ex: `$ all MyModel`)
+
+* `update`: Updates an instance based on the class name and id by adding or updating attribute (save the change into the JSON file). Ex: `$ update BaseModel 1234-1234-1234 email "aibnb@mail.com"`.
+
+  * Usage: `update <class name> <id> <attribute name> "<attribute value>"`
+  * Only one attribute can be updated at the time
+  * You can assume the attribute name is valid (exists for this model)
+  * The attribute value must be casted to the attribute type
+  * If the class name is missing, print `**class name missing**` (ex: `$ update`)
+  * If the class name doesn’t exist, print `**class doesn't exist**` (ex: `$ update MyModel`)
+  * If the `id` is missing, print `**instance id missing**` (ex: `$ update BaseModel`)
+  * If the instance of the class name doesn’t exist for the `id`, print `**no instance found**` (ex: `$ update BaseModel 121212`)
+  * If the attribute name is missing, print `**attribute name missing**` (ex: `$ update BaseModel existing-id`)
+  * If the value for the attribute name doesn’t exist, print `**value missing**` (ex: `$ update BaseModel existing-id first_name`)
+  * All other arguments should not be used (Ex: `$ update BaseModel 1234-1234-1234 email "aibnb@mail.com" first_name "Betty" = $ update BaseModel 1234-1234-1234 email "aibnb@mail.com"`)
+  * `id`, `created_at` and `updated_at` can't be updated. You can assume they won’t be passed in the update command
+  * Only “simple” arguments can be updated: string, integer and float. You can assume nobody will try to update list of ids or datetime
+
+* Let’s add some rules:
+
+  * You can assume arguments are always in the right order
+  * Each arguments are separated by a space
+  * A string argument with a space must be between double quote
+  * The error management starts from the first argument to the last one
+
+```
+guillaume@ubuntu:~/AirBnB$ ./console.py
+(hbnb) all MyModel
+** class doesn't exist **
+(hbnb) show BaseModel
+** instance id missing **
+(hbnb) show BaseModel My_First_Model
+** no instance found **
+(hbnb) create BaseModel
+49faff9a-6318-451f-87b6-910505c55907
+(hbnb) all BaseModel
+["[BaseModel] (49faff9a-6318-451f-87b6-910505c55907) {'created_at': datetime.datetime(2017, 10, 2, 3, 10, 25, 903293), 'id': '49faff9a-6318-451f-87b6-910505c55907', 'updated_at': datetime.datetime(2017, 10, 2, 3, 10, 25, 903300)}"]
+(hbnb) show BaseModel 49faff9a-6318-451f-87b6-910505c55907
+[BaseModel] (49faff9a-6318-451f-87b6-910505c55907) {'created_at': datetime.datetime(2017, 10, 2, 3, 10, 25, 903293), 'id': '49faff9a-6318-451f-87b6-910505c55907', 'updated_at': datetime.datetime(2017, 10, 2, 3, 10, 25, 903300)}
+(hbnb) destroy
+** class name missing **
+(hbnb) update BaseModel 49faff9a-6318-451f-87b6-910505c55907 first_name "Betty"
+(hbnb) show BaseModel 49faff9a-6318-451f-87b6-910505c55907
+[BaseModel] (49faff9a-6318-451f-87b6-910505c55907) {'first_name': 'Betty', 'id': '49faff9a-6318-451f-87b6-910505c55907', 'created_at': datetime.datetime(2017, 10, 2, 3, 10, 25, 903293), 'updated_at': datetime.datetime(2017, 10, 2, 3, 11, 3, 49401)}
+(hbnb) create BaseModel
+2dd6ef5c-467c-4f82-9521-a772ea7d84e9
+(hbnb) all BaseModel
+["[BaseModel] (2dd6ef5c-467c-4f82-9521-a772ea7d84e9) {'id': '2dd6ef5c-467c-4f82-9521-a772ea7d84e9', 'created_at': datetime.datetime(2017, 10, 2, 3, 11, 23, 639717), 'updated_at': datetime.datetime(2017, 10, 2, 3, 11, 23, 639724)}", "[BaseModel] (49faff9a-6318-451f-87b6-910505c55907) {'first_name': 'Betty', 'id': '49faff9a-6318-451f-87b6-910505c55907', 'created_at': datetime.datetime(2017, 10, 2, 3, 10, 25, 903293), 'updated_at': datetime.datetime(2017, 10, 2, 3, 11, 3, 49401)}"]
+(hbnb) destroy BaseModel 49faff9a-6318-451f-87b6-910505c55907
+(hbnb) show BaseModel 49faff9a-6318-451f-87b6-910505c55907
+** no instance found **
+(hbnb)
+```
+
+**Repo:**
+
+* GitHub repository: `AirBnB_clone`
+* File: `console.py`
+
+#### Solution
+
+`console.py File`
+
+```
+def do_create(self, arg):
+        """Usage: create <class>
+        Create a new class instance and print its id.
+        """
+        argl = parse(arg)
+        if len(argl) == 0:
+            print("** class name missing **")
+        elif argl[0] not in HBNBCommand.__classes:
+            print("** class doesn't exist **")
+        else:
+            print(eval(argl[0])().id)
+            storage.save()
+
+    def do_show(self, arg):
+        """Usage: show <class> <id> or <class>.show(<id>)
+        Display the string representation of a class instance of a given id.
+        """
+        argl = parse(arg)
+        objdict = storage.all()
+        if len(argl) == 0:
+            print("** class name missing **")
+        elif argl[0] not in HBNBCommand.__classes:
+            print("** class doesn't exist **")
+        elif len(argl) == 1:
+            print("** instance id missing **")
+        elif "{}.{}".format(argl[0], argl[1]) not in objdict:
+            print("** no instance found **")
+        else:
+            print(objdict["{}.{}".format(argl[0], argl[1])])
+
+    def do_destroy(self, arg):
+        """Usage: destroy <class> <id> or <class>.destroy(<id>)
+        Delete a class instance of a given id."""
+        argl = parse(arg)
+        objdict = storage.all()
+        if len(argl) == 0:
+            print("** class name missing **")
+        elif argl[0] not in HBNBCommand.__classes:
+            print("** class doesn't exist **")
+        elif len(argl) == 1:
+            print("** instance id missing **")
+        elif "{}.{}".format(argl[0], argl[1]) not in objdict.keys():
+            print("** no instance found **")
+        else:
+            del objdict["{}.{}".format(argl[0], argl[1])]
+            storage.save()
+
+    def do_all(self, arg):
+        """Usage: all or all <class> or <class>.all()
+        Display string representations of all instances of a given class.
+        If no class is specified, displays all instantiated objects."""
+        argl = parse(arg)
+        if len(argl) > 0 and argl[0] not in HBNBCommand.__classes:
+            print("** class doesn't exist **")
+        else:
+            objl = []
+            for obj in storage.all().values():
+                if len(argl) > 0 and argl[0] == obj.__class__.__name__:
+                    objl.append(obj.__str__())
+                elif len(argl) == 0:
+                    objl.append(obj.__str__())
+            print(objl)
+
+    def do_update(self, arg):
+        """Usage: update <class> <id> <attribute_name> <attribute_value> or
+       <class>.update(<id>, <attribute_name>, <attribute_value>) or
+       <class>.update(<id>, <dictionary>)
+        Update a class instance of a given id by adding or updating
+        a given attribute key/value pair or dictionary."""
+        argl = parse(arg)
+        objdict = storage.all()
+
+        if len(argl) == 0:
+            print("** class name missing **")
+            return False
+        if argl[0] not in HBNBCommand.__classes:
+            print("** class doesn't exist **")
+            return False
+        if len(argl) == 1:
+            print("** instance id missing **")
+            return False
+        if "{}.{}".format(argl[0], argl[1]) not in objdict.keys():
+            print("** no instance found **")
+            return False
+        if len(argl) == 2:
+            print("** attribute name missing **")
+            return False
+        if len(argl) == 3:
+            try:
+                type(eval(argl[2])) != dict
+            except NameError:
+                print("** value missing **")
+                return False
+```

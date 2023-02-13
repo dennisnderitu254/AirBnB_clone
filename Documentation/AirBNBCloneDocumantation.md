@@ -1,6 +1,6 @@
 # AirBNB Clone Console Documentation
 
-## The docs will be based on the tasks 0 to task 17
+## The docs will be based on the tasks 3 to task 17
 
 ## Description :house
 
@@ -291,6 +291,7 @@ Write a class BaseModel that defines all common attributes/methods for other cla
   * This method will be the first piece of the serialization/deserialization process: create a dictionary representation with “simple object type” of our `BaseModel`
 
 ```
+
 guillaume@ubuntu:~/AirBnB$ cat test_base_model.py
 #!/usr/bin/python3
 from models.base_model import BaseModel
